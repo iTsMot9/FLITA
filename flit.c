@@ -3,6 +3,10 @@
 void convertor(int number) {
     unsigned char convert_number = 0;
     int i = 0;
+    char flag_minus = 0;
+    if (number < 0) {
+        flag_minus = 1;
+    }
     putchar(' ');
     while (number != 0) {
         if (number % 2 == 0) {
@@ -14,7 +18,13 @@ void convertor(int number) {
         number /= 2;
         i++;
     }
-    for (i = 15; i >= 0; i--) {
+    if (flag_minus == 1) {
+        putchar('1');
+    }
+    else {
+        putchar('0');
+    }
+    for (i = 14; i >= 0; i--) {
         if (convert_number & (1 << i)) {
             putchar('1');
         }
