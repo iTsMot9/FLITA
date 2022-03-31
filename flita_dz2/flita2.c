@@ -1,0 +1,58 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+  FILE *file;
+  char arr[100][100], s;
+  int i = 0, j = 0;
+  file = fopen("matrix_of_incendence71.txt", "r");
+  while (!feof(file))
+  {
+    fscanf(file, "%c", &s);
+    if (s != ' ' && s != '\n')
+    {
+      arr[i][j] = s;
+      j++;
+      if (j == 16)
+      {
+        i++;
+        j = 0;
+      }
+    }
+  }
+  fclose(file);
+  file = fopen("gr.gv", "w");
+  fprintf(file, "graph grath {\n");
+  for (int d = 0; d < 5; d++)
+  {
+    fprintf(file, "%d\n", d + 1);
+  }
+  for (int a = 0; a < 16; a++)
+  {
+    s = -1;
+    for (int y = 0; y < 5; y++)
+    {
+      if (arr[y][a] != '0')
+      {
+        if (s == -1)
+        {
+          fprintf(file, "%d", y + 1);
+          printf("%d", y + 1);
+          s = 0;
+        }
+        else
+        {
+          printf(" -- %d", y + 1);
+          fprintf(file, " -- %d", y + 1, a + 1);
+        }
+      }
+    }
+    fprintf(file, "\n");
+    printf("\n");
+  }
+  fprintf(file, "}");
+  fclose(file);
+  system("dot gr.gv -Tpng -o graf.png");
+  system("graf.png");
+}
